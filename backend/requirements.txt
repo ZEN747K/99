@@ -1,0 +1,7 @@
+Flask==3.0.3
+flask-cors==3.0.10
+mysql-connector-python==8.0.25
+python-dotenv==1.0.1
+Werkzeug==3.0.3
+redis==5.0.5
+Flask-Caching==1.10.1

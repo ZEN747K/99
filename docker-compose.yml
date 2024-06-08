@@ -1,0 +1,66 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: mydatabase
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+
+  backend:
+    build: ./backend
+ 
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+    # deploy:
+    #   replicas: 3
+    
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    deploy:
+      replicas: 3
+    expose:
+      - "80"
+    # networks:
+    #   - frontend-backend
+
+      
+  redis:
+    image: redis:latest
+    container_name: redis-1
+    ports:
+      - "6379:6379"
+
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8024:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - frontend
+    # networks:
+    #   - frontend-backend
+
+# networks:
+#   frontend-backend:
+      
+
+volumes:
+  db_data:

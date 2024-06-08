@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU Information</title>
+</head>
+<body>
+<!-- แถวส่วนหัวของตาราง -->
+    <h1>GPU Information</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>product ID</th>
+                <th>products</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Slot</th>
+                <th>Chipset</th>
+                <th>Series</th>
+                <th>gpu_model</th>
+                <th>gpu_speed_oc</th>
+                <th>gpu_speed_gaming</th>
+                <th>memory_speed</th>
+                <th>memory_size</th>
+                <th>memory_type</th>
+                <th>cuda_cores</th>
+                <th>length</th>
+                <th>width</th>
+                <th>height</th>
+                <th>max_resolution</th>
+                <th>directx_support</th>
+                <th>crossfire_sli_support</th>
+                <th>dvi_port</th>
+                <th>hdmi_port</th>
+                <th>display_port</th>
+                <th>option_port</th>
+                <th>power_consumption</th>
+                <th>power_supply_requirement</th>
+                <th>power_connectors</th>
+                <th>warranty_years</th>
+            </tr>
+        </thead>
+        <tbody id="gpuTableBody">
+            <!-- ข้อมูล GPU จะถูกแสดงที่นี่ -->
+        </tbody>
+    </table>
+
+    <script>
+        // เรียกใช้ API เพื่อดึงข้อมูล GPU
+        fetch('http://localhost:5000/')
+    .then(response => response.json())
+    .then(responseObject => {
+        const gpuTableBody = document.getElementById('gpuTableBody');
+
+        // ตรวจสอบว่า responseObject มี property data ที่เป็น array หรือไม่
+        if (Array.isArray(responseObject.data)) {
+            // ใช้ responseObject.data เพื่อวนลูปและแสดงผล
+            responseObject.data.forEach(gpu => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <td>${gpu.products_id}</td>
+                <td>${gpu.products}</td>
+                <td>${gpu.brand}</td>
+                <td>${gpu.model}</td>
+                <td>${gpu.slot}</td>
+                <td>${gpu.chipset}</td>
+                <td>${gpu.series}</td>
+                <td>${gpu.gpu_model}</td>
+                <td>${gpu.gpu_speed_oc}</td>
+                <td>${gpu.gpu_speed_gaming}</td>
+                <td>${gpu.memory_speed}</td>
+                <td>${gpu.memory_size}</td>
+                <td>${gpu.memory_type}</td>
+                <td>${gpu.cuda_cores}</td>
+                <td>${gpu.length}</td>
+                <td>${gpu.width}</td>
+                <td>${gpu.height}</td>
+                <td>${gpu.max_resolution}</td>
+                <td>${gpu.directx_support}</td>
+                <td>${gpu.crossfire_sli_support}</td>
+                <td>${gpu.dvi_port}</td>
+                <td>${gpu.hdmi_port}</td>
+                <td>${gpu.display_port}</td>
+                <td>${gpu.option_port}</td>
+                <td>${gpu.power_consumption}</td>
+                <td>${gpu.power_supply_requirement}</td>
+                <td>${gpu.power_connectors}</td>
+                <td>${gpu.warranty_years}</td>
+                
+
+                `;
+                gpuTableBody.appendChild(row);
+            });
+        } else {
+            console.error('Expected an array, but received:', responseObject);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+    </script>
+
+</body>
+</html>
