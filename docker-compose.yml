@@ -13,6 +13,7 @@ services:
       - "3307:3306"
 
 
+
   backend:
     build: ./backend
  
@@ -21,11 +22,12 @@ services:
     depends_on:
       - db
     expose:
-      - "80"
+      - "5000"
     volumes:
       - ./backend:/app
     deploy:
       replicas: 3
+
     
 
   frontend:
@@ -36,8 +38,7 @@ services:
       replicas: 3
     expose:
       - "80"
-    # networks:
-    #   - frontend-backend
+
 
       
   redis:
@@ -45,6 +46,7 @@ services:
     container_name: redis-1
     ports:
       - "6379:6379"
+
 
 
   nginx:
@@ -56,11 +58,7 @@ services:
     depends_on:
       - frontend
       - backend
-    # networks:
-    #   - frontend-backend
 
-# networks:
-#   frontend-backend:
       
 
 volumes:

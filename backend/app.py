@@ -19,7 +19,7 @@ DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
 
-@app.route('/', methods=['GET'])
+@app.route('/be', methods=['GET'])
 def get_products():
     
     cached_data = redis_client.get('graphics_cards')

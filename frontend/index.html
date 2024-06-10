@@ -50,7 +50,7 @@
 
     <script>
         // เรียกใช้ API เพื่อดึงข้อมูล GPU
-        fetch('http://localhost:5000/')
+        fetch('/be')
     .then(response => response.json())
     .then(responseObject => {
         const gpuTableBody = document.getElementById('gpuTableBody');
